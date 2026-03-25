@@ -13,15 +13,12 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 0; /* Changed from 20px to remove default padding */
-      
-      /* THIS ADDS THE NEW BACKGROUND */
-      background: white; /* Start with white at the very top */
-      background: linear-gradient(to bottom, #ffffff 0%, #a4c9e8 60%, #52a5d2 100%);
-      background-attachment: fixed; /* Keep it fixed when scrolling */
+      /* Background gradient: White at top, blue shades from middle */
+      background: #ffffff;
+      background: linear-gradient(to bottom, #ffffff 0%, #ffffff 25%, #a4c9e8 65%, #52a5d2 100%);
+      background-attachment: fixed;
     }
 
-    /* Content wrapper to add back padding for the elements */
     .content-wrapper {
       display: flex;
       flex-direction: column;
@@ -30,13 +27,11 @@
       padding: 20px;
     }
 
-    /* LOGO SECTION */
+    /* LOGO SECTION - Background removed to merge with body */
     .logo-box {
-      background: rgba(26, 26, 46, 0.9); /* Re-added slightly transparent dark bg for logo contrasting */
       width: 100%;
       max-width: 420px;
-      border-radius: 12px;
-      padding: 20px;
+      padding: 10px;
       text-align: center;
       margin-bottom: 16px;
       display: flex;
@@ -44,45 +39,47 @@
       align-items: center;
     }
 
-    /* Styles for your uploaded JPG */
     .logo-img {
-      width: 300px; /* Adjust size as needed */
+      width: 100%;
+      max-width: 350px;
       height: auto;
-      margin-bottom: 12px;
-      border-radius: 8px;
+      margin-bottom: 15px;
     }
 
     .logo-title {
-      color: #00d4ff;
+      color: #0080ff; /* Adjusted blue for better visibility on white */
       font-size: 26px;
       font-weight: bold;
       letter-spacing: 3px;
     }
+
     .logo-sub {
-      color: #aaa;
-      font-size: 12px;
-      letter-spacing: 2px;
-      margin-top: 4px;
+      color: #000000; /* Text color changed to Black */
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-top: 6px;
     }
 
-    /* SCANNER BUTTON STYLES */
+    /* SCANNER BUTTON - Yellow Box */
     #startBtn {
-      margin: 12px 0;
-      padding: 14px;
-      /* CHANGE BACKGROUND TO YELLOW */
-      background: #ffc107; /* A strong yellow color */
-      /* CHANGE TEXT COLOR TO DARK FOR CONTRAST */
-      color: #1a1a2e; /* Dark navy color used elsewhere */
-      border: 2px solid #e0a800; /* Slightly darker yellow border for definition */
-      border-radius: 8px;
+      margin: 20px 0;
+      padding: 16px;
+      background: #ffcc00; /* Bright Yellow */
+      color: #000000;
+      border: 2px solid #e6b800;
+      border-radius: 12px;
       font-size: 18px;
-      font-weight: bold; /* Make text bolder */
+      font-weight: bold;
       cursor: pointer;
       width: 100%;
       max-width: 420px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.1s;
     }
-    #startBtn:hover {
-        background: #e0a800; /* Slightly darker on hover */
+    
+    #startBtn:active {
+      transform: scale(0.98);
     }
 
     #reader {
@@ -91,12 +88,15 @@
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      background: white;
     }
+
     #status {
       margin-top: 10px;
-      color: #333; /* Darker status text for better contrast against light blue */
+      color: #333;
       font-size: 14px;
       text-align: center;
+      font-weight: bold;
     }
 
     /* PARTICIPANT CARD */
@@ -117,10 +117,8 @@
       font-size: 18px;
       font-weight: bold;
       color: white;
-      letter-spacing: 1px;
     }
 
-    /* Color per type */
     .type-Speaker      { background: #6a0dad; }
     .type-Chairperson { background: #c0392b; }
     .type-Delegate    { background: #1a6a2e; }
@@ -133,70 +131,41 @@
     .detail-row {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #f0f0f0;
-      font-size: 15px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
     }
-    .detail-label { color: #888; font-size: 13px; width: 45%; }
-    .detail-value { font-weight: bold; color: #1a1a2e; width: 55%; text-align: right; }
+    .detail-label { color: #666; font-size: 13px; width: 40%; }
+    .detail-value { font-weight: bold; color: #000; width: 60%; text-align: right; }
 
     .welcome-msg {
-      margin: 14px 0;
+      margin: 15px 0;
       padding: 12px;
       border-radius: 8px;
       text-align: center;
-      font-size: 16px;
       font-weight: bold;
     }
 
-    .welcome-Speaker      { background: #f3e6ff; color: #6a0dad; border: 2px solid #6a0dad; }
-    .welcome-Chairperson { background: #fde8e8; color: #c0392b; border: 2px solid #c0392b; }
-    .welcome-Delegate    { background: #e6f4ea; color: #1a6a2e; border: 2px solid #1a6a2e; }
-    .welcome-Poster      { background: #fff0e6; color: #d35400; border: 2px solid #d35400; }
-    .welcome-Participant { background: #e6eeff; color: #1a3a6e; border: 2px solid #1a3a6e; }
-    .welcome-Default      { background: #e6e6f0; color: #1a1a2e; border: 2px solid #1a1a2e; }
-
-    #confirmBtn {
-      width: 100%;
-      padding: 14px;
-      background: #28a745;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 14px;
-    }
-    #confirmBtn:disabled {
-      background: #aaa;
-      cursor: not-allowed;
-    }
-
-    /* RESULT */
+    /* RESULT MESSAGES */
     #result {
       display: none;
       width: 100%;
       max-width: 420px;
       padding: 20px;
       border-radius: 12px;
-      font-size: 18px;
       font-weight: bold;
       text-align: center;
       margin-top: 16px;
     }
     .success { background: #d4edda; color: #155724; border: 2px solid #28a745; }
-    .warning { background: #fff3cd; color: #856404; border: 2px solid #ffc107; }
     .error   { background: #f8d7da; color: #721c24; border: 2px solid #dc3545; }
 
     #scanAgainBtn {
-      margin-top: 14px;
-      padding: 12px;
-      background: #1a1a2e;
+      margin-top: 15px;
+      padding: 14px;
+      background: #333;
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 16px;
       cursor: pointer;
       display: none;
       width: 100%;
@@ -208,12 +177,13 @@
 
   <div class="content-wrapper">
     <div class="logo-box">
-      <img src="logo.jpg" alt="Logo" class="logo-img">
+      <img src="logo.jpg" alt="ViroGlobal 2026 Logo" class="logo-img">
       <div class="logo-title">EVENT QR SCANNER</div>
       <div class="logo-sub">by Manipal Institute of Virology</div>
     </div>
 
     <button id="startBtn" onclick="startScanner()">Tap to Start Camera</button>
+    
     <p id="status"></p>
     <div id="reader"></div>
 
@@ -229,21 +199,17 @@
           <span class="detail-value" id="pAffiliation"></span>
         </div>
         <div class="detail-row">
-          <span class="detail-label">Designation</span>
-          <span class="detail-value" id="pDesignation"></span>
-        </div>
-        <div class="detail-row">
-          <span class="detail-label">Presentation Type</span>
+          <span class="detail-label">Type</span>
           <span class="detail-value" id="pType"></span>
         </div>
         <div class="detail-row" style="border:none;">
-          <span class="detail-label">Participation ID</span>
+          <span class="detail-label">ID</span>
           <span class="detail-value" id="pId"></span>
         </div>
 
         <div class="welcome-msg" id="welcomeMsg"></div>
 
-        <button id="confirmBtn" onclick="confirmAttendance()">Confirm Attendance</button>
+        <button id="confirmBtn" style="width:100%; padding:14px; background:#28a745; color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="confirmAttendance()">Confirm Attendance</button>
       </div>
     </div>
 
@@ -254,25 +220,22 @@
   <script>
     var scanner;
     var isProcessing = false;
-    var started = false;
     var currentUrl = "";
     
     function startScanner() {
-      if (started) return;
-      started = true;
       document.getElementById("startBtn").style.display = "none";
-      document.getElementById("status").innerText = "Starting camera...";
+      document.getElementById("status").innerText = "Initializing camera...";
+      
       scanner = new Html5Qrcode("reader");
       scanner.start(
         { facingMode: "environment" },
         { fps: 10, qrbox: { width: 250, height: 250 } },
         onScanSuccess,
         onScanError
-      ).then(function() {
-        document.getElementById("status").innerText = "Point camera at QR code";
-      }).catch(function(err) {
-        document.getElementById("status").innerText = "Camera error: " + err;
-        started = false;
+      ).then(() => {
+        document.getElementById("status").innerText = "Scanning... Align QR inside the box";
+      }).catch(err => {
+        document.getElementById("status").innerText = "Error: " + err;
         document.getElementById("startBtn").style.display = "block";
       });
     }
@@ -281,94 +244,63 @@
       if (isProcessing) return;
       isProcessing = true;
       currentUrl = decodedText;
-      document.getElementById("status").innerText = "Loading details...";
 
-      scanner.stop().then(function() {
+      scanner.stop().then(() => {
+        document.getElementById("status").innerText = "Fetching data...";
+        // Simulated fetch - replace with your actual API endpoint logic
         fetch(decodedText + "&action=details")
-          .then(function(res) { return res.text(); })
-          .then(function(data) {
-            try {
-              var p = JSON.parse(data);
-              if (p.error) {
-                showResult(p.error, "error");
-              } else {
-                showCard(p);
-              }
-            } catch(e) {
-              showResult("Error loading details", "error");
+          .then(res => res.json())
+          .then(p => {
+            if (p.error) {
+              showResult(p.error, "error");
+            } else {
+              showCard(p);
             }
           })
-          .catch(function() {
-            showResult("Network error - try again", "error");
-          });
+          .catch(() => showResult("Connection Error", "error"));
       });
     }
 
-    function onScanError(err) {}
+    function onScanError(err) { /* Silent ignore scanning noise */ }
 
     function showCard(p) {
       document.getElementById("status").innerText = "";
-      document.getElementById("pName").innerText        = p.name        || "-";
-      document.getElementById("pAffiliation").innerText = p.affiliation  || "-";
-      document.getElementById("pDesignation").innerText = p.designation  || "-";
-      document.getElementById("pType").innerText        = p.type         || "-";
-      document.getElementById("pId").innerText          = p.id           || "-";
+      document.getElementById("pName").innerText = p.name || "-";
+      document.getElementById("pAffiliation").innerText = p.affiliation || "-";
+      document.getElementById("pType").innerText = p.type || "Participant";
+      document.getElementById("pId").innerText = p.id || "-";
 
-      var type = p.type || "Default";
-      var typeClass = "Default";
-      if (type.toLowerCase().includes("speaker"))    typeClass = "Speaker";
-      else if (type.toLowerCase().includes("chair")) typeClass = "Chairperson";
-      else if (type.toLowerCase().includes("poster"))typeClass = "Poster";
-      else if (type.toLowerCase().includes("deleg")) typeClass = "Delegate";
-      else if (type.toLowerCase().includes("partic"))typeClass = "Participant";
-
-      var header = document.getElementById("cardHeader");
-      header.className = "card-header type-" + typeClass;
-      header.innerText = type.toUpperCase();
-
-      var welcomeDiv = document.getElementById("welcomeMsg");
-      welcomeDiv.className = "welcome-msg welcome-" + typeClass;
-      welcomeDiv.innerText = "Welcome " + type + " to ViroGlobal 2026!";
-
+      let typeClass = "Default";
+      const t = (p.type || "").toLowerCase();
+      if (t.includes("speaker")) typeClass = "Speaker";
+      else if (t.includes("chair")) typeClass = "Chairperson";
+      else if (t.includes("deleg")) typeClass = "Delegate";
+      
+      document.getElementById("cardHeader").className = "card-header type-" + typeClass;
+      document.getElementById("welcomeMsg").innerText = "Welcome to ViroGlobal 2026!";
       document.getElementById("card").style.display = "block";
-
-      if (p.status == "Present") {
-        document.getElementById("confirmBtn").disabled = true;
-        document.getElementById("confirmBtn").innerText = "Already Checked In";
-      } else {
-        document.getElementById("confirmBtn").disabled = false;
-        document.getElementById("confirmBtn").innerText = "Confirm Attendance";
-      }
     }
 
     function confirmAttendance() {
-      document.getElementById("confirmBtn").disabled = true;
-      document.getElementById("confirmBtn").innerText = "Marking...";
-
+      document.getElementById("confirmBtn").innerText = "Processing...";
       fetch(currentUrl + "&action=mark")
-        .then(function(res) { return res.text(); })
-        .then(function(msg) {
+        .then(res => res.text())
+        .then(msg => {
           document.getElementById("card").style.display = "none";
-          showResult(msg, msg.includes("Marked") ? "success" : "warning");
-        })
-        .catch(function() {
-          showResult("Network error - try again", "error");
+          showResult(msg, "success");
         });
     }
 
     function showResult(msg, type) {
-      var resultDiv = document.getElementById("result");
-      resultDiv.innerText = msg;
-      resultDiv.className = type;
-      resultDiv.style.display = "block";
+      const resDiv = document.getElementById("result");
+      resDiv.innerText = msg;
+      resDiv.className = type;
+      resDiv.style.display = "block";
       document.getElementById("scanAgainBtn").style.display = "block";
-      document.getElementById("status").innerText = "";
     }
 
     function resetScanner() {
       isProcessing = false;
-      started = false;
-      currentUrl = "";
       document.getElementById("card").style.display = "none";
       document.getElementById("result").style.display = "none";
       document.getElementById("scanAgainBtn").style.display = "none";
