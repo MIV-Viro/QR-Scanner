@@ -17,16 +17,28 @@
       padding: 20px;
     }
 
-    /* LOGO */
+    /* LOGO SECTION */
     .logo-box {
       background: #1a1a2e;
       width: 100%;
       max-width: 420px;
       border-radius: 12px;
-      padding: 18px;
+      padding: 20px;
       text-align: center;
       margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
+    /* Styles for your uploaded JPG */
+    .logo-img {
+      width: 100px; /* Adjust size as needed */
+      height: auto;
+      margin-bottom: 12px;
+      border-radius: 8px;
+    }
+
     .logo-title {
       color: #00d4ff;
       font-size: 26px;
@@ -89,12 +101,12 @@
     }
 
     /* Color per type */
-    .type-Speaker     { background: #6a0dad; }
+    .type-Speaker      { background: #6a0dad; }
     .type-Chairperson { background: #c0392b; }
     .type-Delegate    { background: #1a6a2e; }
     .type-Poster      { background: #d35400; }
     .type-Participant { background: #1a3a6e; }
-    .type-Default     { background: #1a1a2e; }
+    .type-Default      { background: #1a1a2e; }
 
     .card-body { padding: 16px; }
 
@@ -117,12 +129,12 @@
       font-weight: bold;
     }
 
-    .welcome-Speaker     { background: #f3e6ff; color: #6a0dad; border: 2px solid #6a0dad; }
+    .welcome-Speaker      { background: #f3e6ff; color: #6a0dad; border: 2px solid #6a0dad; }
     .welcome-Chairperson { background: #fde8e8; color: #c0392b; border: 2px solid #c0392b; }
     .welcome-Delegate    { background: #e6f4ea; color: #1a6a2e; border: 2px solid #1a6a2e; }
     .welcome-Poster      { background: #fff0e6; color: #d35400; border: 2px solid #d35400; }
     .welcome-Participant { background: #e6eeff; color: #1a3a6e; border: 2px solid #1a3a6e; }
-    .welcome-Default     { background: #e6e6f0; color: #1a1a2e; border: 2px solid #1a1a2e; }
+    .welcome-Default      { background: #e6e6f0; color: #1a1a2e; border: 2px solid #1a1a2e; }
 
     #confirmBtn {
       width: 100%;
@@ -174,18 +186,16 @@
 </head>
 <body>
 
-  <!-- LOGO -->
   <div class="logo-box">
+    <img src="logo.jpg" alt="Logo" class="logo-img">
     <div class="logo-title">VIROGLOBAL</div>
     <div class="logo-sub">EVENT CHECK-IN</div>
   </div>
 
-  <!-- SCANNER -->
   <button id="startBtn" onclick="startScanner()">Tap to Start Camera</button>
   <p id="status"></p>
   <div id="reader"></div>
 
-  <!-- PARTICIPANT CARD -->
   <div id="card">
     <div class="card-header" id="cardHeader">Participant Details</div>
     <div class="card-body">
@@ -216,7 +226,6 @@
     </div>
   </div>
 
-  <!-- RESULT -->
   <div id="result"></div>
   <button id="scanAgainBtn" onclick="resetScanner()">Scan Next Participant</button>
 
@@ -225,8 +234,7 @@
     var isProcessing = false;
     var started = false;
     var currentUrl = "";
-    var DEPLOYMENT_URL = "https://script.google.com/macros/s/AKfycbyKZpOGY7aHbVXOmVBSSYXAGfDEW3j5XpM1l1if8CmiOL7utvJ38jwjKGOxKfKerWDe7A/exec";
-
+    
     function startScanner() {
       if (started) return;
       started = true;
@@ -254,7 +262,6 @@
       document.getElementById("status").innerText = "Loading details...";
 
       scanner.stop().then(function() {
-        // Fetch participant details first
         fetch(decodedText + "&action=details")
           .then(function(res) { return res.text(); })
           .then(function(data) {
@@ -279,15 +286,12 @@
 
     function showCard(p) {
       document.getElementById("status").innerText = "";
-
-      // Fill details
       document.getElementById("pName").innerText        = p.name        || "-";
       document.getElementById("pAffiliation").innerText = p.affiliation  || "-";
       document.getElementById("pDesignation").innerText = p.designation  || "-";
       document.getElementById("pType").innerText        = p.type         || "-";
       document.getElementById("pId").innerText          = p.id           || "-";
 
-      // Color header and welcome message by type
       var type = p.type || "Default";
       var typeClass = "Default";
       if (type.toLowerCase().includes("speaker"))    typeClass = "Speaker";
@@ -304,10 +308,8 @@
       welcomeDiv.className = "welcome-msg welcome-" + typeClass;
       welcomeDiv.innerText = "Welcome " + type + " to ViroGlobal 2026!";
 
-      // Show card
       document.getElementById("card").style.display = "block";
 
-      // If already marked, disable button
       if (p.status == "Present") {
         document.getElementById("confirmBtn").disabled = true;
         document.getElementById("confirmBtn").innerText = "Already Checked In";
