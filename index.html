@@ -218,9 +218,13 @@
   </div>
 
   <script>
+    // --- CHANGE YOUR URL HERE ---
+    const DEPLOY_URL = "YOUR_SCRIPT_URL_HERE"; 
+    // ----------------------------
+
     var scanner;
     var isProcessing = false;
-    var currentUrl = "";
+    var currentParticipantId = ""; // Renamed for clarity
     
     function startScanner() {
       document.getElementById("startBtn").style.display = "none";
@@ -243,12 +247,17 @@
     function onScanSuccess(decodedText) {
       if (isProcessing) return;
       isProcessing = true;
-      currentUrl = decodedText;
+      
+      // Store the scanned ID (e.g., MIV-2026-001)
+      currentParticipantId = decodedText;
 
       scanner.stop().then(() => {
         document.getElementById("status").innerText = "Fetching data...";
-        // Simulated fetch - replace with your actual API endpoint logic
-        fetch(decodedText + "&action=details")
+        
+        // Constructs URL like: DEPLOY_URL?id=XYZ&action=details
+        const fetchUrl = `${DEPLOY_URL}?id=${encodeURIComponent(decodedText)}&action=details`;
+
+        fetch(fetchUrl)
           .then(res => res.json())
           .then(p => {
             if (p.error) {
@@ -257,11 +266,11 @@
               showCard(p);
             }
           })
-          .catch(() => showResult("Connection Error", "error"));
+          .catch(() => showResult("Connection Error - Check URL or Internet", "error"));
       });
     }
 
-    function onScanError(err) { /* Silent ignore scanning noise */ }
+    function onScanError(err) { /* Ignore noise */ }
 
     function showCard(p) {
       document.getElementById("status").innerText = "";
@@ -283,11 +292,19 @@
 
     function confirmAttendance() {
       document.getElementById("confirmBtn").innerText = "Processing...";
-      fetch(currentUrl + "&action=mark")
+      
+      // Constructs URL like: DEPLOY_URL?id=XYZ&action=mark
+      const markUrl = `${DEPLOY_URL}?id=${encodeURIComponent(currentParticipantId)}&action=mark`;
+
+      fetch(markUrl)
         .then(res => res.text())
         .then(msg => {
           document.getElementById("card").style.display = "none";
           showResult(msg, "success");
+        })
+        .catch(() => {
+          showResult("Failed to save. Try again.", "error");
+          document.getElementById("confirmBtn").innerText = "Confirm Attendance";
         });
     }
 
@@ -309,5 +326,3 @@
       document.getElementById("reader").innerHTML = "";
     }
   </script>
-</body>
-</html>
