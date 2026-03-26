@@ -12,7 +12,6 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      background: #ffffff;
       background: linear-gradient(to bottom, #ffffff 0%, #ffffff 25%, #a4c9e8 65%, #52a5d2 100%);
       background-attachment: fixed;
     }
@@ -96,9 +95,10 @@
     .card-header {
       padding: 16px;
       text-align: center;
-      font-size: 18px;
+      font-size: 20px;
       font-weight: bold;
       color: white;
+      letter-spacing: 1px;
     }
     .type-Speaker     { background: #6a0dad; }
     .type-Chairperson { background: #c0392b; }
@@ -110,18 +110,39 @@
     .detail-row {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 10px 0;
       border-bottom: 1px solid #eee;
     }
     .detail-label { color: #666; font-size: 13px; width: 40%; }
-    .detail-value { font-weight: bold; color: #000; width: 60%; text-align: right; }
+    .detail-value { font-weight: bold; color: #000; width: 60%; text-align: right; font-size: 14px; }
+    .id-box {
+      margin: 12px 0;
+      background: #ff6600;
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+    .id-box-label {
+      color: white;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .id-box-value {
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
     .welcome-msg {
-      margin: 15px 0;
+      margin: 12px 0;
       padding: 12px;
       border-radius: 8px;
       text-align: center;
       font-weight: bold;
-      font-size: 16px;
+      font-size: 15px;
     }
     .welcome-Speaker     { background: #f3e6ff; color: #6a0dad; border: 2px solid #6a0dad; }
     .welcome-Chairperson { background: #fde8e8; color: #c0392b; border: 2px solid #c0392b; }
@@ -187,10 +208,7 @@
     <div id="card">
       <div class="card-header" id="cardHeader">Participant Details</div>
       <div class="card-body">
-        <div class="detail-row">
-          <span class="detail-label">Name</span>
-          <span class="detail-value" id="pName"></span>
-        </div>
+
         <div class="detail-row">
           <span class="detail-label">Affiliation</span>
           <span class="detail-value" id="pAffiliation"></span>
@@ -204,9 +222,15 @@
           <span class="detail-value" id="pType"></span>
         </div>
         <div class="detail-row" style="border:none;">
-          <span class="detail-label">Participation ID</span>
-          <span class="detail-value" id="pId"></span>
+          <span class="detail-label">Email</span>
+          <span class="detail-value" id="pEmail" style="font-size:12px;"></span>
         </div>
+
+        <div class="id-box">
+          <div class="id-box-label">Participation ID</div>
+          <div class="id-box-value" id="pId"></div>
+        </div>
+
         <div class="welcome-msg" id="welcomeMsg"></div>
         <button id="confirmBtn" onclick="confirmAttendance()">Confirm Attendance</button>
       </div>
@@ -216,14 +240,11 @@
     <button id="scanAgainBtn" onclick="resetScanner()">Scan Next Participant</button>
 
   </div>
-
   <script>
-    // YOUR DEPLOYMENT URL
     var DEPLOY_URL = "https://script.google.com/macros/s/AKfycbyOxapKyjcN_bDt3BgdW-Mms8jB-xt6iptXc_cE1MkuypEmg65pF41jTVCVkmlQEGuCFQ/exec";
-
     var scanner;
     var isProcessing = false;
-    var currentId = ""; // stores only the Participation ID
+    var currentId = "";
 
     function startScanner() {
       document.getElementById("startBtn").style.display = "none";
@@ -246,12 +267,9 @@
       if (isProcessing) return;
       isProcessing = true;
 
-      // Extract just the ID from the scanned URL
-      // QR contains: https://...exec?id=VIR-26-056
       var extractedId = decodedText;
       if (decodedText.indexOf("?id=") !== -1) {
         extractedId = decodedText.split("?id=")[1];
-        // Remove any extra params like &action=...
         if (extractedId.indexOf("&") !== -1) {
           extractedId = extractedId.split("&")[0];
         }
@@ -286,12 +304,15 @@
 
     function showCard(p) {
       document.getElementById("status").innerText = "";
-      document.getElementById("pName").innerText        = p.name        || "-";
+
+      // Fill details
       document.getElementById("pAffiliation").innerText = p.affiliation || "-";
       document.getElementById("pDesignation").innerText = p.designation || "-";
       document.getElementById("pType").innerText        = p.type        || "-";
+      document.getElementById("pEmail").innerText       = p.email       || "-";
       document.getElementById("pId").innerText          = p.id          || "-";
 
+      // Card header shows NAME
       var type = p.type || "Default";
       var typeClass = "Default";
       if (type.toLowerCase().includes("speaker"))     typeClass = "Speaker";
@@ -302,12 +323,14 @@
 
       var header = document.getElementById("cardHeader");
       header.className = "card-header type-" + typeClass;
-      header.innerText = type.toUpperCase();
+      header.innerText = (p.name || "Participant").toUpperCase(); // NAME shown here
 
+      // Welcome message uses name
       var welcomeDiv = document.getElementById("welcomeMsg");
       welcomeDiv.className = "welcome-msg welcome-" + typeClass;
-      welcomeDiv.innerText = "Welcome " + type + " to ViroGlobal 2026!";
+      welcomeDiv.innerText = "Welcome " + (p.name || "Guest") + " to ViroGlobal 2026!";
 
+      // Confirm button state
       var btn = document.getElementById("confirmBtn");
       if (p.status == "Present") {
         btn.disabled = true;
