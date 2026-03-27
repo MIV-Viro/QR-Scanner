@@ -153,20 +153,26 @@
     .welcome-Participant { background: #e6f7ff; color: #0099cc; border: 2px solid #0099cc; }
     .welcome-Default     { background: #e6f7ff; color: #0099cc; border: 2px solid #0099cc; }
     #confirmBtn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #ffff00 0%, #ffff00 100%);
-      color: #003399;
-      border: 2px solid #003399;
-      border-radius: 8px;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 14px;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 10px rgba(0,51,153,0.2);
-      transition: transform 0.1s;
-    }
+  width: 100%;
+  padding: 14px;
+  /* Updated to 25% saturated yellow and removed the gradient for a solid look */
+  background-color: #FFF9BF; 
+  color: #003399;
+  
+  /* Changed border to match the background so there is no "margin" color effect */
+  border: 2px solid #FFF9BF; 
+  
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 14px;
+  letter-spacing: 1px;
+  
+  /* Adjusted shadow to be subtler to match the softer yellow */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.1s;
+}
     #confirmBtn:active { transform: scale(0.98); }
     #confirmBtn:disabled {
       background: #aaa;
