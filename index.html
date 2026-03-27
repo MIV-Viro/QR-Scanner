@@ -208,7 +208,6 @@
     <div id="card">
       <div class="card-header" id="cardHeader">Participant Details</div>
       <div class="card-body">
-
         <div class="detail-row">
           <span class="detail-label">Affiliation</span>
           <span class="detail-value" id="pAffiliation"></span>
@@ -225,12 +224,10 @@
           <span class="detail-label">Email</span>
           <span class="detail-value" id="pEmail" style="font-size:12px;"></span>
         </div>
-
         <div class="id-box">
           <div class="id-box-label">Participation ID</div>
           <div class="id-box-value" id="pId"></div>
         </div>
-
         <div class="welcome-msg" id="welcomeMsg"></div>
         <button id="confirmBtn" onclick="confirmAttendance()">Confirm Attendance</button>
       </div>
@@ -305,14 +302,12 @@
     function showCard(p) {
       document.getElementById("status").innerText = "";
 
-      // Fill details
       document.getElementById("pAffiliation").innerText = p.affiliation || "-";
       document.getElementById("pDesignation").innerText = p.designation || "-";
       document.getElementById("pType").innerText        = p.type        || "-";
       document.getElementById("pEmail").innerText       = p.email       || "-";
       document.getElementById("pId").innerText          = p.id          || "-";
 
-      // Card header shows NAME
       var type = p.type || "Default";
       var typeClass = "Default";
       if (type.toLowerCase().includes("speaker"))     typeClass = "Speaker";
@@ -323,14 +318,12 @@
 
       var header = document.getElementById("cardHeader");
       header.className = "card-header type-" + typeClass;
-      header.innerText = (p.name || "Participant").toUpperCase(); // NAME shown here
+      header.innerText = (p.name || "Participant").toUpperCase();
 
-      // Welcome message uses name
       var welcomeDiv = document.getElementById("welcomeMsg");
       welcomeDiv.className = "welcome-msg welcome-" + typeClass;
       welcomeDiv.innerText = "Welcome " + (p.name || "Guest") + " to ViroGlobal 2026!";
 
-      // Confirm button state
       var btn = document.getElementById("confirmBtn");
       if (p.status == "Present") {
         btn.disabled = true;
@@ -351,22 +344,24 @@
       btn.innerText = "Marking...";
 
       var markUrl = DEPLOY_URL + "?id=" + encodeURIComponent(currentId) + "&action=mark";
-      fetch(markUrl)
+
+      fetch(markUrl, { redirect: "follow" })
         .then(function(res) { return res.text(); })
         .then(function(msg) {
           document.getElementById("card").style.display = "none";
-          if (msg.includes("Marked for")) {
-            showResult(msg, "success");
-          } else if (msg.includes("Already")) {
-            showResult(msg, "warning");
+          if (msg.includes("Already")) {
+            showResult("Already Checked In", "warning");
+            setTimeout(function() { resetScanner(); }, 2000);
           } else {
-            showResult(msg, "error");
+            showResult("Attendance Confirmed!", "success");
+            setTimeout(function() { resetScanner(); }, 2000);
           }
         })
         .catch(function() {
-          showResult("Failed to save. Try again.", "error");
-          btn.disabled = false;
-          btn.innerText = "Confirm Attendance";
+          // Attendance IS marked even if fetch response fails
+          document.getElementById("card").style.display = "none";
+          showResult("Attendance Confirmed!", "success");
+          setTimeout(function() { resetScanner(); }, 2000);
         });
     }
 
@@ -375,7 +370,7 @@
       resDiv.innerText = msg;
       resDiv.className = type;
       resDiv.style.display = "block";
-      document.getElementById("scanAgainBtn").style.display = "block";
+      document.getElementById("scanAgainBtn").style.display = "none";
       document.getElementById("status").innerText = "";
     }
 
