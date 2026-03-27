@@ -92,20 +92,21 @@
       overflow: hidden;
       margin-top: 16px;
     }
-   .card-header {
-  padding: 16px;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  color: #00bfff;
-  letter-spacing: 1px;
-}
-    .type-Speaker     { background: #6a0dad; }
-    .type-Chairperson { background: #c0392b; }
-    .type-Delegate    { background: #1a6a2e; }
-    .type-Poster      { background: #d35400; }
-    .type-Participant { background: #1a3a6e; }
-    .type-Default     { background: #1a1a2e; }
+    .card-header {
+      padding: 16px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      letter-spacing: 1px;
+    }
+    /* ALL types = sky blue background, white text */
+    .type-Speaker     { background: #0099cc; }
+    .type-Chairperson { background: #0099cc; }
+    .type-Delegate    { background: #0099cc; }
+    .type-Poster      { background: #0099cc; }
+    .type-Participant { background: #0099cc; }
+    .type-Default     { background: #0099cc; }
     .card-body { padding: 16px; }
     .detail-row {
       display: flex;
@@ -116,9 +117,10 @@
     }
     .detail-label { color: #666; font-size: 13px; width: 40%; }
     .detail-value { font-weight: bold; color: #000; width: 60%; text-align: right; font-size: 14px; }
+    /* Participation ID box - sky blue */
     .id-box {
       margin: 12px 0;
-      background: #ff6600;
+      background: #0099cc;
       border-radius: 8px;
       padding: 12px;
       text-align: center;
@@ -131,11 +133,11 @@
       margin-bottom: 4px;
     }
     .id-box-value {
-  color: #00bfff;
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
     .welcome-msg {
       margin: 12px 0;
       padding: 12px;
@@ -144,14 +146,12 @@
       font-weight: bold;
       font-size: 15px;
     }
-    .welcome-Speaker     { background: #f3e6ff; color: #6a0dad; border: 2px solid #6a0dad; }
-    .welcome-Chairperson { background: #fde8e8; color: #c0392b; border: 2px solid #c0392b; }
-    .welcome-Delegate    { background: #e6f4ea; color: #1a6a2e; border: 2px solid #1a6a2e; }
-    .welcome-Poster      { background: #fff0e6; color: #d35400; border: 2px solid #d35400; }
-    .welcome-Participant { background: #e6eeff; color: #1a3a6e; border: 2px solid #1a3a6e; }
-    .welcome-Default     { background: #e6e6f0; color: #1a1a2e; border: 2px solid #1a1a2e; }
-
-    /* UPDATED CONFIRM BUTTON - Yellow/Blue/White theme */
+    .welcome-Speaker     { background: #e6f7ff; color: #0099cc; border: 2px solid #0099cc; }
+    .welcome-Chairperson { background: #e6f7ff; color: #0099cc; border: 2px solid #0099cc; }
+    .welcome-Delegate    { background: #e6f7ff; color: #0099cc; border: 2px solid #0099cc; }
+    .welcome-Poster      { background: #e6f7ff; color: #0099cc; border: 2px solid #0099cc; }
+    .welcome-Participant { background: #e6f7ff; color: #0099cc; border: 2px solid #0099cc; }
+    .welcome-Default     { background: #e6f7ff; color: #0099cc; border: 2px solid #0099cc; }
     #confirmBtn {
       width: 100%;
       padding: 14px;
@@ -175,7 +175,6 @@
       cursor: not-allowed;
       box-shadow: none;
     }
-
     #result {
       display: none;
       width: 100%;
@@ -207,17 +206,14 @@
 </head>
 <body>
   <div class="content-wrapper">
-
     <div class="logo-box">
       <img src="logo.jpg" alt="ViroGlobal 2026 Logo" class="logo-img">
       <div class="logo-title">EVENT QR SCANNER</div>
       <div class="logo-sub">by Manipal Institute of Virology</div>
     </div>
-
     <button id="startBtn" onclick="startScanner()">Tap to Start Camera</button>
     <p id="status"></p>
     <div id="reader"></div>
-
     <div id="card">
       <div class="card-header" id="cardHeader">Participant Details</div>
       <div class="card-body">
@@ -245,10 +241,8 @@
         <button id="confirmBtn" onclick="confirmAttendance()">Confirm Attendance</button>
       </div>
     </div>
-
     <div id="result"></div>
     <button id="scanAgainBtn" onclick="resetScanner()">Scan Next Participant</button>
-
   </div>
   <script>
     var DEPLOY_URL = "https://script.google.com/macros/s/AKfycbyOxapKyjcN_bDt3BgdW-Mms8jB-xt6iptXc_cE1MkuypEmg65pF41jTVCVkmlQEGuCFQ/exec";
@@ -347,7 +341,6 @@
         btn.style.color = "#003399";
         btn.style.border = "2px solid #003399";
       }
-
       document.getElementById("card").style.display = "block";
     }
 
